@@ -289,3 +289,76 @@ body {
 .game-card:nth-child(5)::before { background: linear-gradient(var(--anvil), var(--anvil-glow)); }
 .card-grid .game-card:nth-child(5):last-child { grid-column: 1 / -1; }
 @media (prefers-reduced-motion: reduce) { .gap-mark { animation: none; } }
+
+/* ---------- Trial IV: hands-on punctuation workshop ---------- */
+.punc-wrap { display: grid; gap: 1.1rem; }
+.punc-instructions {
+  font-size: 1.02rem; line-height: 1.6; color: var(--ink-soft); font-style: italic;
+}
+.punc-instructions .caret-demo { color: var(--ember); font-style: normal; }
+
+/* the mark palette */
+.palette { display: flex; gap: 0.55rem; flex-wrap: wrap; align-items: center; }
+.pmark {
+  font-family: var(--font-mono); font-size: 1.25rem; font-weight: 600;
+  min-width: 3rem; height: 3rem; display: grid; place-items: center;
+  background: rgba(255,252,245,0.8); color: var(--ink);
+  border: 1.5px solid var(--line-strong); border-radius: 5px; cursor: pointer;
+  transition: transform 0.16s, background 0.2s, border-color 0.2s, box-shadow 0.2s;
+  padding: 0 0.7rem;
+}
+.pmark:hover { transform: translateY(-2px); border-color: var(--ink); }
+.pmark.active {
+  background: var(--ink); color: var(--paper); border-color: var(--ink);
+  box-shadow: 0 8px 18px -10px var(--ink);
+}
+.pmark[data-mark=""] { font-size: 0.82rem; letter-spacing: 0.04em; }
+
+/* the editable paragraph */
+.punc-para {
+  font-family: var(--font-body); font-size: clamp(1.15rem, 3vw, 1.5rem); line-height: 2.1;
+  background: var(--ink); color: var(--paper);
+  border-radius: 5px; padding: 1.4rem 1.5rem; text-align: left;
+  box-shadow: inset 0 0 0 1px rgba(244,236,221,0.08), 0 18px 40px -26px rgba(0,0,0,0.7);
+  position: relative;
+}
+.punc-para::before {
+  content: "RAW \2014 CLICK THE GAPS"; position: absolute; top: -9px; left: 16px;
+  font-family: var(--font-mono); font-size: 0.56rem; letter-spacing: 0.28em;
+  background: var(--brass); color: #fff; padding: 0.16rem 0.5rem; border-radius: 2px;
+}
+.word { white-space: nowrap; }
+
+/* the gaps between words */
+.gap {
+  display: inline-block; min-width: 1.05em; text-align: center; cursor: pointer;
+  border-radius: 3px; margin: 0 0.02em; position: relative; vertical-align: baseline;
+  transition: background 0.15s;
+}
+.gap:hover { background: rgba(242,120,47,0.28); }
+.gap .caret {
+  color: rgba(244,236,221,0.28); font-size: 0.7em; line-height: 1;
+  transition: color 0.15s;
+}
+.gap:hover .caret { color: var(--ember-glow); }
+.gap .mk {
+  font-family: var(--font-body); font-weight: 700; color: var(--ember-glow);
+  font-size: 1.05em; padding: 0 0.04em;
+}
+.gap.filled { background: rgba(242,120,47,0.16); }
+.gap.ok .mk { color: #7fd6a3; }
+.gap.ok { background: rgba(47,163,154,0.26); box-shadow: inset 0 0 0 1.5px var(--anvil-glow); }
+.gap.bad { background: rgba(214,73,31,0.3); box-shadow: inset 0 0 0 1.5px var(--ember); }
+.gap.bad .caret { color: #ff9a6b; }
+
+/* actions + feedback */
+.punc-actions { display: flex; gap: 0.9rem; align-items: center; flex-wrap: wrap; }
+.link-btn {
+  background: none; border: none; cursor: pointer; color: var(--ink-soft);
+  font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.06em;
+  text-decoration: underline; text-underline-offset: 3px; padding: 0.4rem;
+}
+.link-btn:hover { color: var(--ember); }
+.punc-feedback { font-size: 1rem; line-height: 1.5; min-height: 1.2rem; }
+.punc-feedback.bad { color: var(--ember); }
+@media (prefers-reduced-motion: reduce) { .gap, .pmark { transition: none; } }
