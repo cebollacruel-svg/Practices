@@ -1,0 +1,230 @@
+/* =========================================================
+   THE SENTENCE FOUNDRY
+   Aesthetic: editorial letterpress meets blacksmith forge.
+   Warm parchment + ink, ember-orange heat, anvil-cyan for "whole".
+   ========================================================= */
+
+:root {
+  --paper: #f4ecdd;
+  --paper-deep: #e8dcc4;
+  --ink: #1c1814;
+  --ink-soft: #4a4036;
+  --ember: #d6491f;       /* heat / danger */
+  --ember-glow: #f2782f;
+  --anvil: #1f6f6b;       /* correct / forged */
+  --anvil-glow: #2fa39a;
+  --brass: #b07d3b;
+  --line: rgba(28, 24, 20, 0.16);
+  --line-strong: rgba(28, 24, 20, 0.42);
+  --shadow: 0 22px 50px -28px rgba(28, 24, 20, 0.55);
+
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Newsreader", Georgia, serif;
+  --font-mono: "Spline Sans Mono", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  min-height: 100vh;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgba(242, 120, 47, 0.16), transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, rgba(31, 111, 107, 0.14), transparent 55%),
+    linear-gradient(180deg, var(--paper) 0%, var(--paper-deep) 100%);
+  background-attachment: fixed;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* film grain for texture */
+.grain {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+
+#app { position: relative; z-index: 1; max-width: 940px; margin: 0 auto; padding: clamp(1.4rem, 4vw, 3rem); }
+
+/* ---------- screen switching ---------- */
+.screen { display: none; animation: rise 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.screen.is-active { display: block; }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+/* ===================== HUB ===================== */
+.masthead { text-align: center; padding: clamp(1rem, 4vw, 2.6rem) 0 2rem; }
+.kicker {
+  font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.34em;
+  text-transform: uppercase; color: var(--ember); margin-bottom: 1.1rem;
+}
+.title {
+  font-family: var(--font-display);
+  font-weight: 900; font-size: clamp(3.2rem, 12vw, 6.6rem);
+  line-height: 0.86; letter-spacing: -0.02em;
+  font-optical-sizing: auto;
+}
+.title-accent {
+  font-style: italic; font-weight: 500; color: transparent;
+  background: linear-gradient(100deg, var(--ember) 10%, var(--ember-glow) 55%, var(--brass) 100%);
+  -webkit-background-clip: text; background-clip: text;
+}
+.lede {
+  max-width: 40ch; margin: 1.6rem auto 0; font-size: 1.14rem; line-height: 1.6;
+  color: var(--ink-soft); font-style: italic;
+}
+
+.card-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.1rem; margin-top: 1rem; }
+@media (max-width: 640px) { .card-grid { grid-template-columns: 1fr; } }
+
+.game-card {
+  position: relative; text-align: left; cursor: pointer;
+  background: rgba(255, 252, 245, 0.6);
+  border: 1px solid var(--line); border-radius: 4px;
+  padding: 1.5rem 1.5rem 1.4rem;
+  box-shadow: var(--shadow); overflow: hidden;
+  transition: transform 0.32s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.32s, border-color 0.32s;
+  font-family: inherit; color: inherit;
+}
+.game-card::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+  background: linear-gradient(var(--ember), var(--ember-glow));
+  transform: scaleY(0); transform-origin: top; transition: transform 0.35s ease;
+}
+.game-card:hover { transform: translateY(-4px); box-shadow: 0 30px 60px -30px rgba(28,24,20,0.6); border-color: var(--line-strong); }
+.game-card:hover::before { transform: scaleY(1); }
+.game-card:nth-child(4)::before { background: linear-gradient(var(--anvil), var(--anvil-glow)); }
+
+.gc-num { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.3em; color: var(--brass); }
+.gc-title { font-family: var(--font-display); font-size: 1.7rem; font-weight: 600; line-height: 1.05; margin: 0.5rem 0 0.55rem; }
+.gc-desc { font-size: 0.98rem; line-height: 1.5; color: var(--ink-soft); }
+.gc-tag {
+  display: inline-block; margin-top: 0.9rem; font-family: var(--font-mono);
+  font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--ink); border: 1px solid var(--line-strong); border-radius: 999px;
+  padding: 0.28rem 0.7rem;
+}
+
+.hub-foot { text-align: center; margin-top: 2.6rem; color: var(--ink-soft); font-style: italic; font-size: 0.95rem; }
+.foot-mark { color: var(--ember); display: block; font-size: 1.2rem; margin-bottom: 0.4rem; }
+
+/* ===================== GAME ===================== */
+.game-topbar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+
+.ghost-btn {
+  font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.06em;
+  background: none; border: 1px solid var(--line-strong); color: var(--ink);
+  padding: 0.55rem 0.9rem; border-radius: 3px; cursor: pointer; transition: all 0.2s;
+}
+.ghost-btn:hover { background: var(--ink); color: var(--paper); }
+
+.hud { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.hud-chip {
+  display: flex; flex-direction: column; align-items: center; min-width: 62px;
+  background: rgba(255, 252, 245, 0.55); border: 1px solid var(--line);
+  border-radius: 3px; padding: 0.35rem 0.6rem; line-height: 1.15;
+}
+.hud-label { font-family: var(--font-mono); font-size: 0.56rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-soft); }
+.hud-chip span:last-child { font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; }
+.hud-streak span:last-child { color: var(--ember); }
+.hud-timer span:last-child { color: var(--anvil); font-variant-numeric: tabular-nums; }
+.hud-timer.is-low span:last-child { color: var(--ember); animation: pulse 0.7s infinite; }
+@keyframes pulse { 50% { opacity: 0.4; } }
+
+.progress-rail { height: 5px; background: rgba(28,24,20,0.1); border-radius: 999px; margin: 1.2rem 0 1.6rem; overflow: hidden; }
+.progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--ember), var(--ember-glow)); transition: width 0.5s cubic-bezier(0.2,0.7,0.2,1); }
+
+.arena { background: rgba(255, 252, 245, 0.5); border: 1px solid var(--line); border-radius: 5px; padding: clamp(1.3rem, 4vw, 2.4rem); box-shadow: var(--shadow); }
+.arena-game-name { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--ember); margin-bottom: 0.7rem; }
+.arena-prompt { font-family: var(--font-display); font-size: clamp(1.25rem, 3.2vw, 1.7rem); font-weight: 600; line-height: 1.2; margin-bottom: 1.4rem; }
+
+/* the broken sentence on display */
+.specimen-wrap { position: relative; margin-bottom: 1.6rem; }
+.specimen {
+  font-family: var(--font-body); font-size: clamp(1.15rem, 3vw, 1.5rem); line-height: 1.55;
+  background: var(--ink); color: var(--paper); border-radius: 4px;
+  padding: 1.3rem 1.4rem; position: relative;
+  box-shadow: inset 0 0 0 1px rgba(244,236,221,0.08), 0 18px 40px -26px rgba(0,0,0,0.7);
+}
+.specimen::before {
+  content: "SPECIMEN"; position: absolute; top: -9px; left: 16px;
+  font-family: var(--font-mono); font-size: 0.56rem; letter-spacing: 0.3em;
+  background: var(--ember); color: #fff; padding: 0.16rem 0.5rem; border-radius: 2px;
+}
+.specimen.is-paragraph { font-family: var(--font-body); font-size: 1.06rem; line-height: 1.7; text-align: left; }
+.specimen.is-paragraph::before { content: "PARAGRAPH"; }
+
+/* ---------- options ---------- */
+.options { display: grid; gap: 0.7rem; }
+.opt {
+  display: flex; gap: 0.85rem; align-items: flex-start; text-align: left;
+  font-family: var(--font-body); font-size: 1.06rem; line-height: 1.45;
+  background: rgba(255,252,245,0.7); border: 1px solid var(--line-strong);
+  color: var(--ink); border-radius: 4px; padding: 0.9rem 1.05rem; cursor: pointer;
+  transition: transform 0.18s, background 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+.opt:hover:not(:disabled) { transform: translateX(4px); border-color: var(--ink); box-shadow: -4px 4px 0 0 var(--ink); }
+.opt:disabled { cursor: default; }
+.opt-key {
+  flex: 0 0 auto; width: 1.7rem; height: 1.7rem; display: grid; place-items: center;
+  font-family: var(--font-mono); font-size: 0.85rem; font-weight: 600;
+  border: 1px solid var(--line-strong); border-radius: 50%; color: var(--ink-soft);
+}
+.opt.correct { background: rgba(31,111,107,0.14); border-color: var(--anvil); box-shadow: -4px 4px 0 0 var(--anvil); }
+.opt.correct .opt-key { background: var(--anvil); color: #fff; border-color: var(--anvil); }
+.opt.wrong { background: rgba(214,73,31,0.12); border-color: var(--ember); box-shadow: -4px 4px 0 0 var(--ember); }
+.opt.wrong .opt-key { background: var(--ember); color: #fff; border-color: var(--ember); }
+.opt.dim { opacity: 0.5; }
+
+/* ---------- repair (typing) ---------- */
+.repair-box { display: grid; gap: 0.8rem; }
+.repair-hint { font-style: italic; color: var(--ink-soft); font-size: 0.98rem; }
+.repair-hint b { color: var(--ember); font-style: normal; }
+.repair-input {
+  width: 100%; min-height: 92px; resize: vertical;
+  font-family: var(--font-mono); font-size: 1.02rem; line-height: 1.6;
+  color: var(--ink); background: rgba(255,255,255,0.7);
+  border: 1px solid var(--line-strong); border-radius: 4px; padding: 0.9rem 1rem;
+}
+.repair-input:focus { outline: none; border-color: var(--anvil); box-shadow: 0 0 0 3px rgba(47,163,154,0.22); }
+.repair-input.shake { animation: shake 0.4s; border-color: var(--ember); }
+@keyframes shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-7px)} 40%{transform:translateX(7px)} 60%{transform:translateX(-4px)} 80%{transform:translateX(4px)} }
+.repair-row { display: flex; gap: 0.7rem; flex-wrap: wrap; align-items: center; }
+.repair-note { font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink-soft); letter-spacing: 0.04em; }
+
+/* ---------- forge button ---------- */
+.forge-btn {
+  font-family: var(--font-mono); font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase;
+  background: var(--ink); color: var(--paper); border: none; cursor: pointer;
+  padding: 0.85rem 1.5rem; border-radius: 3px; position: relative; overflow: hidden;
+  transition: transform 0.18s, box-shadow 0.2s;
+}
+.forge-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 30px -16px var(--ember); }
+.forge-btn::after {
+  content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(242,120,47,0.45), transparent);
+  transform: translateX(-100%); transition: transform 0.5s;
+}
+.forge-btn:hover::after { transform: translateX(100%); }
+
+/* ---------- verdict ---------- */
+.verdict { margin-top: 1.6rem; padding-top: 1.4rem; border-top: 1px dashed var(--line-strong); animation: rise 0.4s ease both; }
+.verdict-head { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin-bottom: 0.45rem; }
+.verdict-head.good { color: var(--anvil); }
+.verdict-head.bad { color: var(--ember); }
+.verdict-why { font-size: 1.04rem; line-height: 1.6; color: var(--ink-soft); margin-bottom: 1.2rem; }
+.verdict-why b { color: var(--ink); }
+.verdict-why .fix { font-family: var(--font-mono); font-size: 0.92rem; background: rgba(31,111,107,0.12); padding: 0.1rem 0.4rem; border-radius: 3px; color: var(--anvil); }
+
+/* ===================== RESULT ===================== */
+#result { display: none; }
+#result.is-active { display: grid; place-items: center; min-height: 60vh; }
+.result-card { text-align: center; background: rgba(255,252,245,0.6); border: 1px solid var(--line); border-radius: 5px; padding: clamp(2rem, 6vw, 3.4rem); box-shadow: var(--shadow); max-width: 540px; }
+.result-score { font-family: var(--font-display); font-weight: 900; font-size: clamp(3rem, 12vw, 5rem); line-height: 1; margin: 0.6rem 0; }
+.result-score .slash { color: var(--ember); font-style: italic; }
+.result-blurb { font-size: 1.1rem; line-height: 1.6; color: var(--ink-soft); font-style: italic; margin-bottom: 1.8rem; }
+.result-actions { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
+
+/* small print helper */
+.tiny { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.06em; color: var(--ink-soft); }
