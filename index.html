@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Sentence Foundry — Grammar Trials</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,500&family=Spline+Sans+Mono:wght@400;500;600&family=Newsreader:ital,opsz@0,6..72;1,6..72&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <main id="app">
+    <!-- ===================== HUB ===================== -->
+    <section id="hub" class="screen is-active">
+      <header class="masthead">
+        <p class="kicker">Apprentice Editor · Level: Brutal</p>
+        <h1 class="title">The Sentence<br /><span class="title-accent">Foundry</span></h1>
+        <p class="lede">
+          Four trials. Broken sentences, dependent on your judgment.
+          Diagnose the flaw, hammer it whole, and learn to read a writer's blueprint.
+          No hints handed out. The forge does not coddle.
+        </p>
+      </header>
+
+      <div class="card-grid" id="hub-grid"><!-- game cards injected here --></div>
+
+      <footer class="hub-foot">
+        <span class="foot-mark">✦</span>
+        <p>Built for writers who refuse to leave a sentence half-finished.</p>
+      </footer>
+    </section>
+
+    <!-- ===================== GAME ===================== -->
+    <section id="game" class="screen">
+      <div class="game-topbar">
+        <button id="quit-btn" class="ghost-btn" type="button">← Forge Menu</button>
+        <div class="hud">
+          <div class="hud-chip" title="Question"><span class="hud-label">Trial</span><span id="hud-progress">1 / 1</span></div>
+          <div class="hud-chip" title="Score"><span class="hud-label">Score</span><span id="hud-score">0</span></div>
+          <div class="hud-chip hud-streak" title="Streak"><span class="hud-label">Streak</span><span id="hud-streak">0×</span></div>
+          <div class="hud-chip hud-timer" id="hud-timer-wrap" title="Time"><span class="hud-label">Time</span><span id="hud-timer">--</span></div>
+        </div>
+      </div>
+
+      <div class="progress-rail"><div id="progress-fill" class="progress-fill"></div></div>
+
+      <div class="arena">
+        <p class="arena-game-name" id="arena-game-name">Trial</p>
+        <p class="arena-prompt" id="arena-prompt">Loading…</p>
+
+        <div class="specimen-wrap">
+          <div class="specimen" id="specimen"></div>
+        </div>
+
+        <div class="options" id="options"><!-- options / inputs injected --></div>
+
+        <div class="verdict" id="verdict" hidden>
+          <p class="verdict-head" id="verdict-head"></p>
+          <p class="verdict-why" id="verdict-why"></p>
+          <button id="next-btn" class="forge-btn" type="button">Next Trial →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== RESULT ===================== -->
+    <section id="result" class="screen">
+      <div class="result-card">
+        <p class="kicker" id="result-rank">Verdict</p>
+        <h2 class="result-score" id="result-score">0 / 0</h2>
+        <p class="result-blurb" id="result-blurb"></p>
+        <div class="result-actions">
+          <button id="retry-btn" class="forge-btn" type="button">Forge Again</button>
+          <button id="home-btn" class="ghost-btn" type="button">← All Trials</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>
