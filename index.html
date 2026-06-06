@@ -28,7 +28,11 @@
       <div class="stat"><span class="stat-val grad-pink">34</span><span class="stat-lbl">Specimens</span></div>
       <div class="stat"><span class="stat-val grad-teal">0</span><span class="stat-lbl stat-score-display">Score</span></div>
     </div>
-    <button class="cta-btn" onclick="goToSlide(1)">Enter the Forge <span class="btn-arrow">→</span></button>
+    <div class="gate-form">
+      <label class="form-lbl" for="studentName">Your full name *</label>
+      <input type="text" id="studentName" class="form-input" placeholder="e.g. Maria Fernandez Vargas" autocomplete="off">
+      <button class="cta-btn" id="enterForgeBtn">Enter the Forge <span class="btn-arrow">→</span></button>
+    </div>
     <p class="prof-line">Designed by <span class="credit-name">Rosney Hernández</span></p>
   </div>
 </div>
@@ -76,6 +80,7 @@
     <div class="eyebrow" id="resultRank">Verdict</div>
     <h2 class="hero-title" id="resultScore">0 / 0</h2>
     <p class="hero-sub" id="resultBlurb"></p>
+    <div id="sheetsStatus" class="sheets-status"></div>
     <div class="result-actions">
       <button class="cta-btn" id="retryBtn">Forge Again →</button>
       <button class="nav-btn prev" id="homeBtn">← All Trials</button>
